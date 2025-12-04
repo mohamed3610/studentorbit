@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Orbit - Find Your Perfect School</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2D5F5D;
+            --primary-light: #4A8B87;
+            --accent: #E87461;
+            --accent-light: #FFB4A5;
+            --cream: #FFF8F3;
+            --sand: #F4E8DC;
+            --navy: #1A3A52;
+            --text: #2C3E50;
+            --text-light: #657786;
+            --border: #E1D5C9;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: var(--cream);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(45, 95, 93, 0.15);
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-orbit {
+            color: var(--accent-light);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        .btn-dashboard {
+            background: var(--accent);
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            opacity: 1 !important;
+        }
+
+        .btn-dashboard:hover {
+            background: var(--accent-light);
+            color: var(--navy);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content .highlight {
+            color: var(--accent);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-content .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 0.2rem;
+            left: 0;
+            width: 100%;
+            height: 0.4rem;
+            background: var(--accent-light);
+            opacity: 0.3;
+            border-radius: 2px;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: white;
+            padding: 3rem 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .search-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.3s ease;
+            background: var(--cream);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+        }
+
+        .btn-search {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.9rem 2.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1.8rem;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-search:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(45, 95, 93, 0.3);
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            padding: 0.6rem 1.2rem;
+            background: var(--sand);
+            border: 2px solid transparent;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-tag:hover,
+        .filter-tag.active {
+            background: var(--accent-light);
+            border-color: var(--accent);
+            color: var(--navy);
+        }
+
+        /* Schools Grid */
+        .schools-section {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .view-options {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .view-btn {
+            padding: 0.6rem 1rem;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .view-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .schools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 2rem;
+        }
+
+        .school-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .school-card:nth-child(1) { animation-delay: 0.1s; }
+        .school-card:nth-child(2) { animation-delay: 0.2s; }
+        .school-card:nth-child(3) { animation-delay: 0.3s; }
+        .school-card:nth-child(4) { animation-delay: 0.4s; }
+        .school-card:nth-child(5) { animation-delay: 0.5s; }
+        .school-card:nth-child(6) { animation-delay: 0.6s; }
+
+        .school-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(45, 95, 93, 0.15);
+        }
+
+        .school-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .school-image::before {
+            content: '🏫';
+            position: absolute;
+            font-size: 4rem;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.3;
+        }
+
+        .school-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .school-content {
+            padding: 1.5rem;
+        }
+
+        .school-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .school-location {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .school-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-pill {
+            background: var(--sand);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .school-tuition {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .school-features {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .school-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            flex: 1;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            flex: 1;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 0.8rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .btn-secondary:hover {
+            background: var(--sand);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--navy);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            margin-top: 6rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-light);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.4s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-section {
+            margin-bottom: 2rem;
+        }
+
+        .modal-section h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .detail-item {
+            padding: 1rem;
+            background: var(--cream);
+            border-radius: 10px;
+        }
+
+        .detail-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .facilities-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .facility-badge {
+            background: var(--sand);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .schools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                Student<span class="logo-orbit">Orbit</span>
+            </div>
+            <div class="nav-links">
+                <a href="#schools">Find Schools</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <a href="#dashboard" class="btn-dashboard">My Dashboard</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Find the <span class="highlight">perfect school</span> for your child's journey</h1>
+            <p>Discover, compare, and apply to Cairo's finest schools all in one place. One application, multiple opportunities.</p>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Top Schools</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">100+</span>
+                    <span class="stat-label">Successful Enrollments</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">95%</span>
+                    <span class="stat-label">Parent Satisfaction</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image">
+            <svg viewBox="0 0 500 500" style="width: 100%; height: auto;">
+                <defs>
+                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#2D5F5D;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#4A8B87;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
+                <!-- Decorative illustration -->
+                <circle cx="250" cy="250" r="200" fill="url(#grad1)" opacity="0.1"/>
+                <circle cx="250" cy="250" r="150" fill="url(#grad1)" opacity="0.15"/>
+                <circle cx="250" cy="250" r="100" fill="url(#grad1)" opacity="0.2"/>
+                <!-- School building -->
+                <rect x="150" y="200" width="200" height="150" fill="#FFF8F3" rx="10"/>
+                <rect x="180" y="230" width="40" height="40" fill="#4A8B87"/>
+                <rect x="230" y="230" width="40" height="40" fill="#4A8B87"/>
+                <rect x="280" y="230" width="40" height="40" fill="#4A8B87"/>
+                <rect x="205" y="280" width="90" height="70" fill="#E87461"/>
+                <polygon points="250,150 150,200 350,200" fill="#2D5F5D"/>
+                <!-- Stars -->
+                <circle cx="100" cy="100" r="3" fill="#FFB4A5"/>
+                <circle cx="400" cy="120" r="3" fill="#FFB4A5"/>
+                <circle cx="380" cy="350" r="3" fill="#FFB4A5"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="search-container">
+            <h2 class="search-title">Discover Your Perfect Match</h2>
+            <form class="search-form" onsubmit="event.preventDefault(); searchSchools();">
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <select id="location">
+                        <option value="">All Areas</option>
+                        <option value="maadi">Maadi</option>
+                        <option value="nasr-city">Nasr City</option>
+                        <option value="heliopolis">Heliopolis</option>
+                        <option value="new-cairo">New Cairo</option>
+                        <option value="6th-october">6th of October</option>
+                        <option value="sheikh-zayed">Sheikh Zayed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="curriculum">Curriculum</label>
+                    <select id="curriculum">
+                        <option value="">All Curricula</option>
+                        <option value="american">American</option>
+                        <option value="british">British</option>
+                        <option value="ib">International Baccalaureate</option>
+                        <option value="egyptian">Egyptian</option>
+                        <option value="french">French</option>
+                        <option value="german">German</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="budget">Annual Budget</label>
+                    <select id="budget">
+                        <option value="">Any Budget</option>
+                        <option value="50-100">EGP 50,000 - 100,000</option>
+                        <option value="100-150">EGP 100,000 - 150,000</option>
+                        <option value="150-200">EGP 150,000 - 200,000</option>
+                        <option value="200+">EGP 200,000+</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-search">Search Schools</button>
+            </form>
+            <div class="filter-tags">
+                <div class="filter-tag active" onclick="toggleTag(this)">🏊 Swimming Pool</div>
+                <div class="filter-tag" onclick="toggleTag(this)">🎭 Arts Program</div>
+                <div class="filter-tag" onclick="toggleTag(this)">⚽ Sports Facilities</div>
+                <div class="filter-tag" onclick="toggleTag(this)">🔬 Science Labs</div>
+                <div class="filter-tag" onclick="toggleTag(this)">🚌 Transportation</div>
+                <div class="filter-tag" onclick="toggleTag(this)">♿ Special Needs Support</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Schools Grid -->
+    <section class="schools-section">
+        <div class="section-header">
+            <h2>Featured Schools in Cairo</h2>
+            <div class="view-options">
+                <button class="view-btn active">Grid View</button>
+                <button class="view-btn">List View</button>
+            </div>
+        </div>
+        <div class="schools-grid">
+            <!-- School Card 1 -->
+            <div class="school-card" onclick="openSchoolModal('cac')">
+                <div class="school-image">
+                    <span class="school-badge">Featured</span>
+                </div>
+                <div class="school-content">
+                    <h3 class="school-name">Cairo American College</h3>
+                    <div class="school-location">📍 Maadi, Cairo</div>
+                    <div class="school-info">
+                        <span class="info-pill">American Curriculum</span>
+                        <span class="info-pill">PreK - Grade 12</span>
+                    </div>
+                    <div class="school-tuition">EGP 185,000/year</div>
+                    <div class="school-features">
+                        <span class="feature">✓ IB Diploma</span>
+                        <span class="feature">✓ Athletics</span>
+                        <span class="feature">✓ Arts Program</span>
+                    </div>
+                    <div class="school-actions">
+                        <button class="btn-primary">Apply Now</button>
+                        <button class="btn-secondary">Learn More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- School Card 2 -->
+            <div class="school-card" onclick="openSchoolModal('bisc')">
+                <div class="school-image">
+                    <span class="school-badge">New Opening</span>
+                </div>
+                <div class="school-content">
+                    <h3 class="school-name">British International School</h3>
+                    <div class="school-location">📍 New Cairo</div>
+                    <div class="school-info">
+                        <span class="info-pill">British Curriculum</span>
+                        <span class="info-pill">FS1 - Year 13</span>
+                    </div>
+                    <div class="school-tuition">EGP 165,000/year</div>
+                    <div class="school-features">
+                        <span class="feature">✓ Cambridge</span>
+                        <span class="feature">✓ Sports Complex</span>
+                        <span class="feature">✓ Music Academy</span>
+                    </div>
+                    <div class="school-actions">
+                        <button class="btn-primary">Apply Now</button>
+                        <button class="btn-secondary">Learn More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- School Card 3 -->
+            <div class="school-card" onclick="openSchoolModal('ais')">
+                <div class="school-image"></div>
+                <div class="school-content">
+                    <h3 class="school-name">Al-Alsson International School</h3>
+                    <div class="school-location">📍 Nasr City</div>
+                    <div class="school-info">
+                        <span class="info-pill">American & British</span>
+                        <span class="info-pill">KG - Grade 12</span>
+                    </div>
+                    <div class="school-tuition">EGP 95,000/year</div>
+                    <div class="school-features">
+                        <span class="feature">✓ Dual Curriculum</span>
+                        <span class="feature">✓ STEM Focus</span>
+                        <span class="feature">✓ Language Center</span>
+                    </div>
+                    <div class="school-actions">
+                        <button class="btn-primary">Apply Now</button>
+                        <button class="btn-secondary">Learn More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- School Card 4 -->
+            <div class="school-card" onclick="openSchoolModal('deo')">
+                <div class="school-image"></div>
+                <div class="school-content">
+                    <h3 class="school-name">Deutsche Schule Cairo</h3>
+                    <div class="school-location">📍 Dokki</div>
+                    <div class="school-info">
+                        <span class="info-pill">German Curriculum</span>
+                        <span class="info-pill">KG - Abitur</span>
+                    </div>
+                    <div class="school-tuition">EGP 125,000/year</div>
+                    <div class="school-features">
+                        <span class="feature">✓ Abitur</span>
+                        <span class="feature">✓ Trilingual</span>
+                        <span class="feature">✓ European Focus</span>
+                    </div>
+                    <div class="school-actions">
+                        <button class="btn-primary">Apply Now</button>
+                        <button class="btn-secondary">Learn More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- School Card 5 -->
+            <div class="school-card" onclick="openSchoolModal('misr')">
+                <div class="school-image">
+                    <span class="school-badge">Top Rated</span>
+                </div>
+                <div class="school-content">
+                    <h3 class="school-name">Misr Language Schools</h3>
+                    <div class="school-location">📍 Heliopolis</div>
+                    <div class="school-info">
+                        <span class="info-pill">American Diploma</span>
+                        <span class="info-pill">PreK - Grade 12</span>
+                    </div>
+                    <div class="school-tuition">EGP 75,000/year</div>
+                    <div class="school-features">
+                        <span class="feature">✓ SAT Prep</span>
+                        <span class="feature">✓ Robotics</span>
+                        <span class="feature">✓ Arabic Excellence</span>
+                    </div>
+                    <div class="school-actions">
+                        <button class="btn-primary">Apply Now</button>
+                        <button class="btn-secondary">Learn More</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- School Card 6 -->
+            <div class="school-card" onclick="openSchoolModal('futures')">
+                <div class="school-image"></div>
+                <div class="school-content">
+                    <h3 class="school-name">Futures International School</h3>
+                    <div class="school-location">📍 6th of October</div>
+                    <div class="school-info">
+                        <span class="info-pill">IB Curriculum</span>
+                        <span class="info-pill">PYP - DP</span>
+                    </div>
+                    <div class="school-tuition">EGP 145,000/year</div>
+                    <div class="school-features">
+                        <span class="feature">✓ Full IB</span>
+                        <span class="feature">✓ Innovation Lab</span>
+                        <span class="feature">✓ Sustainability</span>
+                    </div>
+                    <div class="school-actions">
+                        <button class="btn-primary">Apply Now</button>
+                        <button class="btn-secondary">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Student<span style="color: var(--accent-light)">Orbit</span></h3>
+                <p>Making education mobility seamless. Find, apply, and transfer to the perfect school for your child's educational journey.</p>
+            </div>
+            <div class="footer-section">
+                <h3>For Parents</h3>
+                <a href="#">Find Schools</a>
+                <a href="#">How It Works</a>
+                <a href="#">Application Guide</a>
+                <a href="#">FAQs</a>
+            </div>
+            <div class="footer-section">
+                <h3>For Schools</h3>
+                <a href="#">List Your School</a>
+                <a href="#">Pricing</a>
+                <a href="#">Features</a>
+                <a href="#">Success Stories</a>
+            </div>
+            <div class="footer-section">
+                <h3>Company</h3>
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 DataOrbit LLC. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- School Detail Modal -->
+    <div class="modal" id="schoolModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="school-name" id="modalSchoolName">Cairo American College</h2>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section">
+                    <h3>School Overview</h3>
+                    <p>Cairo American College is a leading international school offering a comprehensive American curriculum from PreK through Grade 12. With a strong focus on academic excellence, character development, and global citizenship, CAC prepares students for success in top universities worldwide.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Key Information</h3>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">Location</div>
+                            <div class="detail-value">Maadi, Cairo</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Curriculum</div>
+                            <div class="detail-value">American / IB</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Grade Levels</div>
+                            <div class="detail-value">PreK - Grade 12</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Annual Tuition</div>
+                            <div class="detail-value">EGP 185,000</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Student Body</div>
+                            <div class="detail-value">650 students</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Class Size</div>
+                            <div class="detail-value">18-22 students</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Facilities & Programs</h3>
+                    <div class="facilities-list">
+                        <span class="facility-badge">🏊 Olympic Swimming Pool</span>
+                        <span class="facility-badge">🏀 Sports Complex</span>
+                        <span class="facility-badge">🎭 Performing Arts Center</span>
+                        <span class="facility-badge">🔬 Science Laboratories</span>
+                        <span class="facility-badge">📚 Modern Library</span>
+                        <span class="facility-badge">💻 Technology Labs</span>
+                        <span class="facility-badge">🎨 Art Studios</span>
+                        <span class="facility-badge">🚌 Bus Service</span>
+                        <span class="facility-badge">🍽️ Cafeteria</span>
+                        <span class="facility-badge">⚕️ Medical Clinic</span>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Application Process</h3>
+                    <p><strong>Application Fee:</strong> EGP 2,000</p>
+                    <p><strong>Required Documents:</strong> Birth certificate, passport copies, previous school records, medical records, recommendation letters</p>
+                    <p><strong>Deadline:</strong> Rolling admissions (Apply early for best availability)</p>
+                </div>
+
+                <div class="school-actions">
+                    <button class="btn-primary" style="flex: 1.5;">Apply to This School</button>
+                    <button class="btn-secondary">Save to Favorites</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTag(element) {
+            element.classList.toggle('active');
+        }
+
+        function searchSchools() {
+            alert('Search functionality will filter schools based on your criteria!');
+        }
+
+        function openSchoolModal(schoolId) {
+            const modal = document.getElementById('schoolModal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('schoolModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on outside click
+        document.getElementById('schoolModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
