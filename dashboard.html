@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Dashboard - Student Orbit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Dashboard-specific styles */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+            background: var(--gray-50);
+            padding-top: 80px;
+        }
+
+        .sidebar {
+            background: white;
+            border-right: 1px solid var(--border-light);
+            padding: var(--space-6);
+            position: fixed;
+            top: 80px;
+            bottom: 0;
+            width: 280px;
+            overflow-y: auto;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: var(--space-2);
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3) var(--space-4);
+            border-radius: var(--radius-lg);
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all var(--transition-base);
+            font-weight: 500;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background: var(--bg-secondary);
+            color: var(--primary-500);
+        }
+
+        .sidebar-link svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: var(--space-8);
+        }
+
+        .dashboard-header {
+            margin-bottom: var(--space-8);
+        }
+
+        .welcome-message {
+            font-size: var(--text-3xl);
+            font-family: var(--font-display);
+            margin-bottom: var(--space-2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .stat-card {
+            background: white;
+            padding: var(--space-6);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+        }
+
+        .stat-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: var(--space-4);
+        }
+
+        .stat-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--text-2xl);
+        }
+
+        .stat-card-value {
+            font-size: var(--text-4xl);
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--primary-500);
+            margin-bottom: var(--space-2);
+        }
+
+        .stat-card-label {
+            font-size: var(--text-sm);
+            color: var(--text-tertiary);
+        }
+
+        .section-title {
+            font-size: var(--text-2xl);
+            font-family: var(--font-display);
+            margin-bottom: var(--space-6);
+        }
+
+        .applications-list {
+            display: grid;
+            gap: var(--space-4);
+        }
+
+        .application-item {
+            background: white;
+            padding: var(--space-6);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: var(--space-6);
+            align-items: center;
+        }
+
+        .application-school-logo {
+            width: 64px;
+            height: 64px;
+            border-radius: var(--radius-lg);
+            background: var(--primary-500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: var(--text-2xl);
+        }
+
+        .application-details h3 {
+            font-size: var(--text-xl);
+            margin-bottom: var(--space-2);
+        }
+
+        .application-meta {
+            display: flex;
+            gap: var(--space-4);
+            font-size: var(--text-sm);
+            color: var(--text-tertiary);
+        }
+
+        .status-badge {
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-full);
+            font-size: var(--text-sm);
+            font-weight: 600;
+        }
+
+        .status-badge.pending {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .status-badge.accepted {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .status-badge.interview {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .status-badge.rejected {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .student-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-6);
+            margin-bottom: var(--space-8);
+        }
+
+        .student-card {
+            background: white;
+            padding: var(--space-6);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+        }
+
+        .student-header {
+            display: flex;
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .student-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--text-4xl);
+        }
+
+        .student-info h3 {
+            font-size: var(--text-xl);
+            margin-bottom: var(--space-1);
+        }
+
+        .student-grade {
+            color: var(--text-tertiary);
+            font-size: var(--text-sm);
+        }
+
+        .student-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-4);
+        }
+
+        .student-stat {
+            text-align: center;
+        }
+
+        .student-stat-value {
+            font-family: var(--font-display);
+            font-size: var(--text-2xl);
+            font-weight: 700;
+            color: var(--primary-500);
+        }
+
+        .student-stat-label {
+            font-size: var(--text-xs);
+            color: var(--text-tertiary);
+        }
+
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-4);
+            margin-bottom: var(--space-8);
+        }
+
+        .action-card {
+            background: white;
+            padding: var(--space-6);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-light);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .action-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--bg-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-4);
+            font-size: var(--text-3xl);
+        }
+
+        .action-title {
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+
+        .action-description {
+            font-size: var(--text-sm);
+            color: var(--text-tertiary);
+        }
+
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .stats-grid,
+            .student-cards,
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation (same as main site) -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="student-orbit-complete.html" class="logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="20" cy="20" r="18" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="20" cy="20" r="12" fill="currentColor" opacity="0.2"/>
+                        <path d="M20 8 L28 20 L20 32 L12 20 Z" fill="currentColor"/>
+                    </svg>
+                    <span class="logo-text">Student<span class="logo-accent">Orbit</span></span>
+                </a>
+                <div class="nav-links">
+                    <a href="#notifications" class="nav-link">🔔 Notifications</a>
+                    <a href="#profile" class="btn btn-outline-sm">Profile</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="#dashboard" class="sidebar-link active">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#students" class="sidebar-link">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                        My Students
+                    </a>
+                </li>
+                <li>
+                    <a href="#applications" class="sidebar-link">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                        </svg>
+                        Applications
+                    </a>
+                </li>
+                <li>
+                    <a href="#schools" class="sidebar-link">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                        </svg>
+                        Explore Schools
+                    </a>
+                </li>
+                <li>
+                    <a href="#favorites" class="sidebar-link">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                        Favorites
+                    </a>
+                </li>
+                <li>
+                    <a href="#documents" class="sidebar-link">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                        </svg>
+                        Documents
+                    </a>
+                </li>
+                <li>
+                    <a href="#messages" class="sidebar-link">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                        </svg>
+                        Messages
+                    </a>
+                </li>
+                <li>
+                    <a href="#settings" class="sidebar-link">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        Settings
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <div class="dashboard-header">
+                <h1 class="welcome-message">Welcome back, Sarah! 👋</h1>
+                <p style="color: var(--text-tertiary);">Here's what's happening with your applications</p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-icon" style="background: #DBEAFE;">📝</div>
+                    </div>
+                    <div class="stat-card-value">5</div>
+                    <div class="stat-card-label">Active Applications</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-icon" style="background: #D1FAE5;">✅</div>
+                    </div>
+                    <div class="stat-card-value">2</div>
+                    <div class="stat-card-label">Accepted Offers</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-icon" style="background: #FEF3C7;">📅</div>
+                    </div>
+                    <div class="stat-card-value">3</div>
+                    <div class="stat-card-label">Interviews Scheduled</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div class="stat-card-icon" style="background: #FED7AA;">⭐</div>
+                    </div>
+                    <div class="stat-card-value">12</div>
+                    <div class="stat-card-label">Favorite Schools</div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <h2 class="section-title">Quick Actions</h2>
+            <div class="quick-actions">
+                <div class="action-card">
+                    <div class="action-icon">🔍</div>
+                    <h3 class="action-title">Find Schools</h3>
+                    <p class="action-description">Discover the perfect school for your child</p>
+                </div>
+
+                <div class="action-card">
+                    <div class="action-icon">➕</div>
+                    <h3 class="action-title">New Application</h3>
+                    <p class="action-description">Start a new school application</p>
+                </div>
+
+                <div class="action-card">
+                    <div class="action-icon">📄</div>
+                    <h3 class="action-title">Upload Documents</h3>
+                    <p class="action-description">Add transcripts and certificates</p>
+                </div>
+            </div>
+
+            <!-- Student Cards -->
+            <h2 class="section-title">My Students</h2>
+            <div class="student-cards">
+                <div class="student-card">
+                    <div class="student-header">
+                        <div class="student-avatar">👧</div>
+                        <div class="student-info">
+                            <h3>Emma Hassan</h3>
+                            <p class="student-grade">Grade 5 • 10 years old</p>
+                        </div>
+                    </div>
+                    <div class="student-stats">
+                        <div class="student-stat">
+                            <div class="student-stat-value">3</div>
+                            <div class="student-stat-label">Applications</div>
+                        </div>
+                        <div class="student-stat">
+                            <div class="student-stat-value">1</div>
+                            <div class="student-stat-label">Accepted</div>
+                        </div>
+                        <div class="student-stat">
+                            <div class="student-stat-value">2</div>
+                            <div class="student-stat-label">Pending</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="student-card">
+                    <div class="student-header">
+                        <div class="student-avatar">👦</div>
+                        <div class="student-info">
+                            <h3>Omar Hassan</h3>
+                            <p class="student-grade">Grade 8 • 13 years old</p>
+                        </div>
+                    </div>
+                    <div class="student-stats">
+                        <div class="student-stat">
+                            <div class="student-stat-value">2</div>
+                            <div class="student-stat-label">Applications</div>
+                        </div>
+                        <div class="student-stat">
+                            <div class="student-stat-value">1</div>
+                            <div class="student-stat-label">Accepted</div>
+                        </div>
+                        <div class="student-stat">
+                            <div class="student-stat-value">1</div>
+                            <div class="student-stat-label">Interview</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Applications -->
+            <h2 class="section-title">Recent Applications</h2>
+            <div class="applications-list">
+                <div class="application-item">
+                    <div class="application-school-logo">🏫</div>
+                    <div class="application-details">
+                        <h3>Cairo American College</h3>
+                        <div class="application-meta">
+                            <span>👧 Emma Hassan</span>
+                            <span>📅 Applied Dec 1, 2024</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="status-badge accepted">Accepted</span>
+                    </div>
+                </div>
+
+                <div class="application-item">
+                    <div class="application-school-logo" style="background: #4A8B87;">🏫</div>
+                    <div class="application-details">
+                        <h3>British International School Cairo</h3>
+                        <div class="application-meta">
+                            <span>👦 Omar Hassan</span>
+                            <span>📅 Applied Nov 28, 2024</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="status-badge interview">Interview Scheduled</span>
+                    </div>
+                </div>
+
+                <div class="application-item">
+                    <div class="application-school-logo" style="background: #667eea;">🏫</div>
+                    <div class="application-details">
+                        <h3>Al-Alsson International School</h3>
+                        <div class="application-meta">
+                            <span>👧 Emma Hassan</span>
+                            <span>📅 Applied Nov 25, 2024</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="status-badge pending">Under Review</span>
+                    </div>
+                </div>
+
+                <div class="application-item">
+                    <div class="application-school-logo" style="background: #f093fb;">🏫</div>
+                    <div class="application-details">
+                        <h3>Deutsche Schule Cairo</h3>
+                        <div class="application-meta">
+                            <span>👦 Omar Hassan</span>
+                            <span>📅 Applied Nov 20, 2024</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="status-badge accepted">Accepted</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
